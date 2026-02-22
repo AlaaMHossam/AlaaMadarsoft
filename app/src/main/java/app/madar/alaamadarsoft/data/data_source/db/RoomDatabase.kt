@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import app.madar.alaamadarsoft.data.data_source.db.dao.PeopleDao
 import app.madar.alaamadarsoft.data.data_source.db.entities.PersonEntity
 
-@Database(entities = [PersonEntity::class], version = 1)
+@Database(entities = [PersonEntity::class], version = 1, exportSchema = false)
 abstract class RoomDatabase : RoomDatabase() {
     abstract fun peopleDao(): PeopleDao
 }

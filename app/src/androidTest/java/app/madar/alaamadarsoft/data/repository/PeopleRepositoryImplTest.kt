@@ -5,6 +5,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import app.madar.alaamadarsoft.data.data_source.db.RoomDatabase
 import app.madar.alaamadarsoft.data.data_source.db.dao.PeopleDao
 import app.madar.alaamadarsoft.data.data_source.db.entities.PersonEntity
+import app.madar.alaamadarsoft.data.mappers.toPerson
 import app.madar.alaamadarsoft.domain.model.Gender
 import app.madar.alaamadarsoft.domain.model.Person
 import kotlinx.coroutines.runBlocking
@@ -48,6 +49,36 @@ class PeopleRepositoryImplTest {
 
         // Then
         val result = runBlocking { peopleDao.getPeople().first() }
+        assertEquals(expectedResult, result)
+    }
+
+    @Test
+    fun when_get_people_then_people_returned_from_db() {
+        // Given
+        val expectedResult = List(2) {
+            Person(
+                id = it,
+                name = "Alaa",
+                age = 37,
+                jobTitle = "Senior Android Developer",
+                gender = Gender.Male
+            )
+        }
+        val personEntities = List(2) {
+            PersonEntity(
+                id = it,
+                name = "Alaa",
+                age = 37,
+                jobTitle = "Senior Android Developer",
+                gender = Gender.Male
+            )
+        }
+        runBlocking { personEntities.forEach { peopleRepositoryImpl.addPerson(it.toPerson()) } }
+
+        // When
+
+        // Then
+        val result = runBlocking { peopleRepositoryImpl.getPeople() }
         assertEquals(expectedResult, result)
     }
 }

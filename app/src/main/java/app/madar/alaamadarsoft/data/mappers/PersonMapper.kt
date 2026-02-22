@@ -11,3 +11,14 @@ fun Person.toEntity(): PersonEntity =
         jobTitle = jobTitle,
         gender = gender
     )
+
+fun PersonEntity.toPerson(): Person =
+    Person(
+        id = id,
+        name = name,
+        age = age,
+        jobTitle = jobTitle,
+        gender = gender
+    )
+
+fun List<PersonEntity>.toPeople() : List<Person> = map { it.toPerson() }

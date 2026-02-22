@@ -6,7 +6,7 @@ import app.madar.alaamadarsoft.domain.model.Gender
 
 @Entity
 data class PersonEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int,
     val name: String,
     val age: Int,
