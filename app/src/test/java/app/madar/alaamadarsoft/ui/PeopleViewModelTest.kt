@@ -5,6 +5,7 @@ import app.madar.alaamadarsoft.domain.model.Person
 import app.madar.alaamadarsoft.domain.repository.PeopleRepository
 import app.madar.alaamadarsoft.ui.states.AddPersonUiState
 import app.madar.alaamadarsoft.ui.states.PeopleUiState
+import app.madar.alaamadarsoft.ui.states.PersonInputState
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -51,6 +52,14 @@ class PeopleViewModelTest {
         }
 
         // When
+        viewModel.updatePersonInputState {
+            PersonInputState(
+                "Alaa",
+                "37",
+                "Senior Android Developer",
+                "Male"
+            )
+        }
         viewModel.addPerson()
 
         // Then
@@ -70,6 +79,14 @@ class PeopleViewModelTest {
         }
 
         // When
+        viewModel.updatePersonInputState {
+            PersonInputState(
+                "Alaa",
+                "37",
+                "Senior Android Developer",
+                "Male"
+            )
+        }
         viewModel.addPerson()
 
         // Then
@@ -88,7 +105,7 @@ class PeopleViewModelTest {
             viewModel.addPersonUiState.collect { collectionList.add(it) }
         }
         val person = Person(
-            id = 1,
+            id = null,
             name = "Alaa",
             age = 37,
             jobTitle = "Senior Android Developer",
@@ -97,6 +114,14 @@ class PeopleViewModelTest {
         coEvery { mockPeopleRepository.addPerson(person) } throws Exception()
 
         // When
+        viewModel.updatePersonInputState {
+            PersonInputState(
+                "Alaa",
+                "37",
+                "Senior Android Developer",
+                "Male"
+            )
+        }
         viewModel.addPerson()
 
         // Then

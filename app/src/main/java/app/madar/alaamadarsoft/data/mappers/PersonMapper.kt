@@ -5,7 +5,7 @@ import app.madar.alaamadarsoft.domain.model.Person
 
 fun Person.toEntity(): PersonEntity =
     PersonEntity(
-        id = id,
+        id = id ?: 0,
         name = name,
         age = age,
         jobTitle = jobTitle,

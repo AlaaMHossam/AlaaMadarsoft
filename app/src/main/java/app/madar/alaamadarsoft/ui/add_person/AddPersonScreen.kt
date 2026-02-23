@@ -11,6 +11,7 @@ fun AddPersonScreen() {
 
     AddPersonContent(
         personInputState = peopleViewModel.personInputState,
-        updatePersonInputState = { peopleViewModel.updatePersonInputState { it } }
-    ) {}
+        updatePersonInputState = { peopleViewModel.updatePersonInputState { it } },
+        onSubmitClicked = { peopleViewModel.addPerson() }
+    )
 }

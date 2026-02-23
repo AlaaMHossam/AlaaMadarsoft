@@ -41,20 +41,20 @@ class PeopleViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
 
     fun addPerson() {
         viewModelScope.launch {
-            _addPersonUiState.emit(AddPersonUiState.Loading)
-            runCatching {
-                peopleRepository.addPerson(
-                    Person(
-                        id = 1,
-                        name = "Alaa",
-                        age = 37,
-                        jobTitle = "Senior Android Developer",
-                        gender = Gender.Male
-                    )
+            if (personInputState.isValidInputs) {
+                _addPersonUiState.emit(AddPersonUiState.Loading)
+
+                val person = Person(
+                    name = personInputState.name,
+                    age = personInputState.age.toInt(),
+                    jobTitle = personInputState.jobTitle,
+                    gender = Gender.valueOf(personInputState.gender),
                 )
+
+                runCatching { peopleRepository.addPerson(person) }
+                    .onSuccess { _addPersonUiState.emit(AddPersonUiState.Success("Person Added")) }
+                    .onFailure { _addPersonUiState.emit(AddPersonUiState.Error("Failed to add person")) }
             }
-                .onSuccess { _addPersonUiState.emit(AddPersonUiState.Success("Person Added")) }
-                .onFailure { _addPersonUiState.emit(AddPersonUiState.Error("Failed to add person")) }
         }
     }
 }
