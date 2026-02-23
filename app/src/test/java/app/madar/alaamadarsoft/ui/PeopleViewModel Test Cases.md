@@ -1,3 +1,5 @@
 ## Test Cases
 
 1. when_update_people_state_then_ui_state_is_loading
+2. when_add_person_then_ui_state_is_loading
+3. when_add_person_is_success_then_add_person_ui_state_is_success
