@@ -1,8 +1,11 @@
 package app.madar.alaamadarsoft.ui
 
+import app.madar.alaamadarsoft.domain.model.Gender
+import app.madar.alaamadarsoft.domain.model.Person
 import app.madar.alaamadarsoft.domain.repository.PeopleRepository
 import app.madar.alaamadarsoft.ui.states.AddPersonUiState
 import app.madar.alaamadarsoft.ui.states.PeopleUiState
+import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -65,6 +68,33 @@ class PeopleViewModelTest {
         backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
             viewModel.addPersonUiState.collect { collectionList.add(it) }
         }
+
+        // When
+        viewModel.addPerson()
+
+        // Then
+        advanceUntilIdle()
+        val result = collectionList[1]
+        assertEquals(expectedResult, result)
+    }
+
+    @Test
+    fun when_add_person_is_error_then_add_person_ui_state_is_error() = runTest {
+        // Given
+        val expectedResult = AddPersonUiState.Error("Failed to add person")
+        val viewModel = PeopleViewModel(mockPeopleRepository)
+        val collectionList = mutableListOf<AddPersonUiState>()
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            viewModel.addPersonUiState.collect { collectionList.add(it) }
+        }
+        val person = Person(
+            id = 1,
+            name = "Alaa",
+            age = 37,
+            jobTitle = "Senior Android Developer",
+            gender = Gender.Male
+        )
+        coEvery { mockPeopleRepository.addPerson(person) } throws Exception()
 
         // When
         viewModel.addPerson()

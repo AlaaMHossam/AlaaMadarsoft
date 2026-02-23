@@ -41,7 +41,9 @@ class PeopleViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
                         gender = Gender.Male
                     )
                 )
-            }.onSuccess { _addPersonUiState.emit(AddPersonUiState.Success("Person Added")) }
+            }
+                .onSuccess { _addPersonUiState.emit(AddPersonUiState.Success("Person Added")) }
+                .onFailure { _addPersonUiState.emit(AddPersonUiState.Error("Failed to add person")) }
         }
     }
 }
