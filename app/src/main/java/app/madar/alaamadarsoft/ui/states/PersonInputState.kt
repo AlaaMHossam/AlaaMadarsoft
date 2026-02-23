@@ -32,5 +32,5 @@ data class PersonInputState(
         get() = isSubmitted && !isValidGender
 
     val isValidInputs: Boolean
-        get() = isValidAge && isValidJobTitle && isValidGender
+        get() = isValidName && isValidAge && isValidJobTitle && isValidGender
 }

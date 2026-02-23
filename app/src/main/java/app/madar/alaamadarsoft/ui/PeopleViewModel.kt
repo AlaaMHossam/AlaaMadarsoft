@@ -41,23 +41,34 @@ class PeopleViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
 
     fun addPerson() {
         viewModelScope.launch {
-            updatePersonInputState { personInputState.copy(isSubmitted = true) }
-            if (personInputState.isValidInputs) {
 
-                _addPersonUiState.emit(AddPersonUiState.Loading)
+            val updatedState = personInputState.copy(isSubmitted = true)
+            updatePersonInputState { updatedState }
 
-                val person = Person(
-                    name = personInputState.name,
-                    age = personInputState.age.toInt(),
-                    jobTitle = personInputState.jobTitle,
-                    gender = Gender.valueOf(personInputState.gender),
-                )
+            if (!updatedState.isValidInputs) return@launch
 
-                runCatching { peopleRepository.addPerson(person) }
-                    .onSuccess { _addPersonUiState.emit(AddPersonUiState.Success("Person Added")) }
-                    .onFailure { _addPersonUiState.emit(AddPersonUiState.Error("Failed to add person")) }
-            }
-            updatePersonInputState { personInputState.copy(isSubmitted = false) }
+            _addPersonUiState.emit(AddPersonUiState.Loading)
+
+            val person = Person(
+                name = updatedState.name,
+                age = updatedState.age.toInt(),
+                jobTitle = updatedState.jobTitle,
+                gender = Gender.valueOf(updatedState.gender),
+            )
+
+            runCatching { peopleRepository.addPerson(person) }
+                .onSuccess {
+                    _addPersonUiState.emit(AddPersonUiState.Success("Person Added"))
+                    updatePersonInputState { PersonInputState() }
+                }
+                .onFailure { _addPersonUiState.emit(AddPersonUiState.Error("Failed to add person")) }
+        }
+    }
+
+    fun resetAddPersonUiState() {
+        viewModelScope.launch {
+            _addPersonUiState.emit(AddPersonUiState.Initial)
+            updatePersonInputState { PersonInputState() }
         }
     }
 }

@@ -10,4 +10,5 @@
     <string name="add_a_person_title">Add a person</string>
     <string name="gender">Gender</string>
     <string name="gender_field_error_message">Invalid Gender</string>
+    <string name="all_people_button_text">All People</string>
 </resources>
