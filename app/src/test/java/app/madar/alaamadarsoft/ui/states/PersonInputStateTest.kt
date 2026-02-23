@@ -43,4 +43,22 @@ class PersonInputStateTest {
         val result = personInputState.isValidGender
         assertEquals(expectedResult, result)
     }
+
+    @Test
+    fun when_valid_inputs_then_isValidInputs_is_true() {
+        // Given
+        val expectedResult = true
+        val personInputState = PersonInputState(
+            name = "Alaa",
+            age = 20,
+            gender = "Male",
+            jobTitle = "Senior Android Developer"
+        )
+
+        // When
+
+        // Then
+        val result = personInputState.isValidInputs
+        assertEquals(expectedResult, result)
+    }
 }
