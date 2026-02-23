@@ -12,7 +12,7 @@ import app.madar.alaamadarsoft.ui.viewmodel.PeopleViewModel
 import app.madar.alaamadarsoft.ui.viewmodel.PeopleViewModelFactory
 
 @Composable
-fun AddPersonScreen() {
+fun AddPersonScreen(navigateToPeople: () -> Unit) {
 
     val app = LocalContext.current.applicationContext as App
 
@@ -29,7 +29,7 @@ fun AddPersonScreen() {
         personInputState = peopleViewModel.personInputState,
         updatePersonInputState = { peopleViewModel.updatePersonInputState { it } },
         onSubmitClicked = { peopleViewModel.addPerson() },
-        onAllPeopleButtonClicked = {},
+        onAllPeopleButtonClicked = navigateToPeople,
         addPersonUiState = addPersonUiState,
         onAddAnotherClicked = peopleViewModel::resetAddPersonUiState,
         onTryAgainClicked = peopleViewModel::resetAddPersonUiState

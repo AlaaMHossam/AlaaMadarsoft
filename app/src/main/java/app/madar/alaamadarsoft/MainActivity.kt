@@ -14,6 +14,7 @@ import androidx.navigation3.ui.NavDisplay
 import app.madar.alaamadarsoft.ui.add_person.AddPersonScreen
 import app.madar.alaamadarsoft.ui.navigation.AddPersonDestination
 import app.madar.alaamadarsoft.ui.navigation.PeopleDestination
+import app.madar.alaamadarsoft.ui.people.PeopleScreen
 import app.madar.alaamadarsoft.ui.theme.AlaaMadarsoftTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,14 +27,17 @@ class MainActivity : ComponentActivity() {
 
             AlaaMadarsoftTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { paddingValues ->
-
                     NavDisplay(
                         modifier = Modifier.padding(paddingValues),
                         backStack = backStack,
                         onBack = { backStack.removeLastOrNull() },
                         entryProvider = entryProvider {
-                            entry<AddPersonDestination> { AddPersonScreen() }
-                            entry<PeopleDestination> { }
+                            entry<AddPersonDestination> {
+                                AddPersonScreen(navigateToPeople = {
+                                    backStack.add(PeopleDestination)
+                                })
+                            }
+                            entry<PeopleDestination> { PeopleScreen() }
                         })
                 }
             }
