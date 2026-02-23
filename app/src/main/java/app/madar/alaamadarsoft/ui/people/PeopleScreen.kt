@@ -1,6 +1,7 @@
 package app.madar.alaamadarsoft.ui.people
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -22,6 +23,8 @@ fun PeopleScreen() {
     val peopleViewModel: PeopleViewModel = viewModel(factory = factory)
 
     val peopleUiState by peopleViewModel.peopleUiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) { peopleViewModel.updatePeopleUiState() }
 
     PeopleContent(
         peopleUiState = peopleUiState

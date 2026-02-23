@@ -11,4 +11,5 @@
     <string name="gender">Gender</string>
     <string name="gender_field_error_message">Invalid Gender</string>
     <string name="all_people_button_text">All People</string>
+    <string name="people_title">People</string>
 </resources>
