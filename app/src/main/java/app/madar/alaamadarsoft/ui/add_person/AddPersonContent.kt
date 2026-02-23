@@ -12,10 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.text.isDigitsOnly
 import app.madar.alaamadarsoft.R
+import app.madar.alaamadarsoft.ui.GenderTextField
 import app.madar.alaamadarsoft.ui.states.PersonInputState
 
 @Composable
@@ -44,12 +47,16 @@ fun AddPersonContent(
                 if (personInputState.nameError)
                     Text(stringResource(R.string.name_field_error_message))
             },
-            singleLine = true
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
         )
 
         TextField(
             value = personInputState.age,
-            onValueChange = { updatePersonInputState(personInputState.copy(age = it)) },
+            onValueChange = {
+                if (it.isDigitsOnly())
+                    updatePersonInputState(personInputState.copy(age = it))
+            },
             placeholder = { Text(stringResource(R.string.age)) },
             isError = personInputState.ageError,
             supportingText = {
@@ -57,7 +64,10 @@ fun AddPersonContent(
                     Text(stringResource(R.string.age_field_error_message))
             },
             singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next
+            )
         )
 
         TextField(
@@ -70,14 +80,13 @@ fun AddPersonContent(
                     Text(stringResource(R.string.job_title_field_error_message))
             },
             singleLine = true
-        )/*TextField(
-            value = personInputState.name,
-            onValueChange = {
-                updatePersonInputState(personInputState.copy(name = it))
-            },
-            placeholder = { Text("Name") },
-            isError = !personInputState.isValidName
-        )*/
+        )
+
+        GenderTextField(
+            gender = personInputState.gender,
+            onGenderChange = { updatePersonInputState(personInputState.copy(gender = it)) },
+            isValidGender = !personInputState.genderError
+        )
 
         Button(onClick = onSubmitClicked) { Text(stringResource(R.string.add_button_text)) }
     }

@@ -8,4 +8,6 @@
     <string name="job_title_field_error_message">Invalid Job title</string>
     <string name="add_button_text">Add</string>
     <string name="add_a_person_title">Add a person</string>
+    <string name="gender">Gender</string>
+    <string name="gender_field_error_message">Invalid Gender</string>
 </resources>
