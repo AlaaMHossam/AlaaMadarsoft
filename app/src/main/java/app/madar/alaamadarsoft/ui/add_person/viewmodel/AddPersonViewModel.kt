@@ -1,4 +1,4 @@
-package app.madar.alaamadarsoft.ui.viewmodel
+package app.madar.alaamadarsoft.ui.add_person.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,16 +9,12 @@ import app.madar.alaamadarsoft.domain.model.Gender
 import app.madar.alaamadarsoft.domain.model.Person
 import app.madar.alaamadarsoft.domain.repository.PeopleRepository
 import app.madar.alaamadarsoft.ui.states.AddPersonUiState
-import app.madar.alaamadarsoft.ui.states.PeopleUiState
 import app.madar.alaamadarsoft.ui.states.PersonInputState
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class PeopleViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
+class AddPersonViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
 
     var personInputState by mutableStateOf(PersonInputState())
         private set
@@ -27,22 +23,8 @@ class PeopleViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
         personInputState = personInputState.transform()
     }
 
-    private val _peopleUiState = MutableStateFlow<PeopleUiState>(PeopleUiState.Initial)
-    val peopleUiState = _peopleUiState.asStateFlow()
-
     private val _addPersonUiState = MutableSharedFlow<AddPersonUiState>()
     val addPersonUiState = _addPersonUiState.asSharedFlow()
-
-    fun updatePeopleUiState() {
-        viewModelScope.launch {
-            _peopleUiState.update { PeopleUiState.Loading }
-            runCatching { peopleRepository.getPeople() }
-                .onSuccess { people -> _peopleUiState.update { PeopleUiState.Success(people) } }
-                .onFailure { exception ->
-                    _peopleUiState.update { PeopleUiState.Error(exception.message.orEmpty()) }
-                }
-        }
-    }
 
     fun addPerson() {
         viewModelScope.launch {

@@ -1,0 +1,5 @@
+## Test Cases
+
+1. when_update_people_state_then_ui_state_is_loading
+2. when_people_fetch_is_success_then_people_ui_state_is_success
+3. when_people_fetch_is_error_then_people_ui_state_is_error

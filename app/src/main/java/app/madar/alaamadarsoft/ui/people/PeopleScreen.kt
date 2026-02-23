@@ -8,8 +8,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.madar.alaamadarsoft.App
-import app.madar.alaamadarsoft.ui.viewmodel.PeopleViewModel
-import app.madar.alaamadarsoft.ui.viewmodel.PeopleViewModelFactory
+import app.madar.alaamadarsoft.ui.people.viewmodel.PeopleViewModel
+import app.madar.alaamadarsoft.ui.people.viewmodel.PeopleViewModelFactory
 
 @Composable
 fun PeopleScreen() {

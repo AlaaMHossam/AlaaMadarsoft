@@ -1,12 +1,11 @@
-package app.madar.alaamadarsoft.ui
+package app.madar.alaamadarsoft.ui.add_person.viewmodel
 
 import app.madar.alaamadarsoft.domain.model.Gender
 import app.madar.alaamadarsoft.domain.model.Person
 import app.madar.alaamadarsoft.domain.repository.PeopleRepository
+import app.madar.alaamadarsoft.ui.MainDispatcherRule
 import app.madar.alaamadarsoft.ui.states.AddPersonUiState
-import app.madar.alaamadarsoft.ui.states.PeopleUiState
 import app.madar.alaamadarsoft.ui.states.PersonInputState
-import app.madar.alaamadarsoft.ui.viewmodel.PeopleViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,7 +19,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class PeopleViewModelTest {
+class AddPersonViewModelTest {
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
@@ -28,29 +27,10 @@ class PeopleViewModelTest {
     private val mockPeopleRepository = mockk<PeopleRepository>(relaxed = true)
 
     @Test
-    fun when_update_people_state_then_ui_state_is_loading() = runTest {
-        // Given
-        val expectedResult = PeopleUiState.Loading
-        val viewModel = PeopleViewModel(mockPeopleRepository)
-        val collectionList = mutableListOf<PeopleUiState>()
-        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
-            viewModel.peopleUiState.collectLatest { collectionList.add(it) }
-        }
-
-        // When
-        viewModel.updatePeopleUiState()
-
-        // Then
-        advanceUntilIdle()
-        val result = collectionList[1]
-        assertEquals(expectedResult, result)
-    }
-
-    @Test
     fun when_add_person_then_ui_state_is_loading() = runTest {
         // Given
         val expectedResult = AddPersonUiState.Loading
-        val viewModel = PeopleViewModel(mockPeopleRepository)
+        val viewModel = AddPersonViewModel(mockPeopleRepository)
         val collectionList = mutableListOf<AddPersonUiState>()
         backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
             viewModel.addPersonUiState.collectLatest { collectionList.add(it) }
@@ -77,7 +57,7 @@ class PeopleViewModelTest {
     fun when_add_person_is_success_then_add_person_ui_state_is_success() = runTest {
         // Given
         val expectedResult = AddPersonUiState.Success("Person Added")
-        val viewModel = PeopleViewModel(mockPeopleRepository)
+        val viewModel = AddPersonViewModel(mockPeopleRepository)
         val collectionList = mutableListOf<AddPersonUiState>()
         backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
             viewModel.addPersonUiState.collect { collectionList.add(it) }
@@ -104,7 +84,7 @@ class PeopleViewModelTest {
     fun when_add_person_is_error_then_add_person_ui_state_is_error() = runTest {
         // Given
         val expectedResult = AddPersonUiState.Error("Failed to add person")
-        val viewModel = PeopleViewModel(mockPeopleRepository)
+        val viewModel = AddPersonViewModel(mockPeopleRepository)
         val collectionList = mutableListOf<AddPersonUiState>()
         backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
             viewModel.addPersonUiState.collect { collectionList.add(it) }
@@ -132,46 +112,6 @@ class PeopleViewModelTest {
         // Then
         advanceUntilIdle()
         val result = collectionList[1]
-        assertEquals(expectedResult, result)
-    }
-
-    @Test
-    fun when_people_fetch_is_success_then_people_ui_state_is_success() = runTest {
-        // Given
-        val expectedResult = PeopleUiState.Success(emptyList())
-        val viewModel = PeopleViewModel(mockPeopleRepository)
-        val collectionList = mutableListOf<PeopleUiState>()
-        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
-            viewModel.peopleUiState.collectLatest { collectionList.add(it) }
-        }
-        coEvery { mockPeopleRepository.getPeople() } returns emptyList()
-
-        // When
-        viewModel.updatePeopleUiState()
-
-        // Then
-        advanceUntilIdle()
-        val result = collectionList[2]
-        assertEquals(expectedResult, result)
-    }
-
-    @Test
-    fun when_people_fetch_is_error_then_people_ui_state_is_error() = runTest {
-        // Given
-        val expectedResult = PeopleUiState.Error("Failed to get People :(")
-        val viewModel = PeopleViewModel(mockPeopleRepository)
-        val collectionList = mutableListOf<PeopleUiState>()
-        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
-            viewModel.peopleUiState.collectLatest { collectionList.add(it) }
-        }
-        coEvery { mockPeopleRepository.getPeople() } throws Exception("Failed to get People :(")
-
-        // When
-        viewModel.updatePeopleUiState()
-
-        // Then
-        advanceUntilIdle()
-        val result = collectionList[2]
         assertEquals(expectedResult, result)
     }
 }
