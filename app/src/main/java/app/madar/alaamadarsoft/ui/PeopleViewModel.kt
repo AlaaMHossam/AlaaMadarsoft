@@ -7,6 +7,7 @@ import app.madar.alaamadarsoft.domain.model.Person
 import app.madar.alaamadarsoft.domain.repository.PeopleRepository
 import app.madar.alaamadarsoft.ui.states.AddPersonUiState
 import app.madar.alaamadarsoft.ui.states.PeopleUiState
+import app.madar.alaamadarsoft.ui.states.PersonInputState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -15,6 +16,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PeopleViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
+
+    val personInputState = PersonInputState()
 
     private val _peopleUiState = MutableStateFlow<PeopleUiState>(PeopleUiState.Initial)
     val peopleUiState = _peopleUiState.asStateFlow()
