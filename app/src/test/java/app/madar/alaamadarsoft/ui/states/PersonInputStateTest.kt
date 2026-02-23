@@ -9,7 +9,7 @@ class PersonInputStateTest {
     fun when_age_is_less_than_18_then_isValidAge_is_false() {
         // Given
         val expectedResult = false
-        val personInputState = PersonInputState(age = 1)
+        val personInputState = PersonInputState(age = "1")
 
         // When
 
@@ -50,7 +50,7 @@ class PersonInputStateTest {
         val expectedResult = true
         val personInputState = PersonInputState(
             name = "Alaa",
-            age = 20,
+            age = "20",
             gender = "Male",
             jobTitle = "Senior Android Developer"
         )

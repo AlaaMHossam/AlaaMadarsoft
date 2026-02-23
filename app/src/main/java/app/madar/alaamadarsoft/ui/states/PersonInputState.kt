@@ -2,12 +2,12 @@ package app.madar.alaamadarsoft.ui.states
 
 data class PersonInputState(
     val name: String = "",
-    val age: Int = 0,
+    val age: String = "",
     val jobTitle: String = "",
     val gender: String = "",
 ) {
     val isValidAge: Boolean
-        get() = age >= 18
+        get() = age.toIntOrNull()?.let { it >= 18 } ?: false
 
     val isValidJobTitle: Boolean
         get() = jobTitle.isNotBlank()

@@ -1,5 +1,8 @@
 package app.madar.alaamadarsoft.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.madar.alaamadarsoft.domain.model.Gender
@@ -17,7 +20,12 @@ import kotlinx.coroutines.launch
 
 class PeopleViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
 
-    val personInputState = PersonInputState()
+    var personInputState by mutableStateOf(PersonInputState())
+        private set
+
+    fun updatePersonInputState(transform: PersonInputState.() -> PersonInputState) {
+        personInputState = personInputState.transform()
+    }
 
     private val _peopleUiState = MutableStateFlow<PeopleUiState>(PeopleUiState.Initial)
     val peopleUiState = _peopleUiState.asStateFlow()
