@@ -6,6 +6,19 @@ import org.junit.Test
 class PersonInputStateTest {
 
     @Test
+    fun when_name_is_empty_then_isValidName_is_false() {
+        // Given
+        val expectedResult = false
+        val personInputState = PersonInputState(name = "   ")
+
+        // When
+
+        // Then
+        val result = personInputState.nameError
+        assertEquals(expectedResult, result)
+    }
+
+    @Test
     fun when_age_is_less_than_18_then_isValidAge_is_false() {
         // Given
         val expectedResult = false
@@ -14,7 +27,7 @@ class PersonInputStateTest {
         // When
 
         // Then
-        val result = personInputState.isValidAge
+        val result = personInputState.ageError
         assertEquals(expectedResult, result)
     }
 
@@ -27,7 +40,7 @@ class PersonInputStateTest {
         // When
 
         // Then
-        val result = personInputState.isValidJobTitle
+        val result = personInputState.jobTitleError
         assertEquals(expectedResult, result)
     }
 
@@ -40,7 +53,7 @@ class PersonInputStateTest {
         // When
 
         // Then
-        val result = personInputState.isValidGender
+        val result = personInputState.genderError
         assertEquals(expectedResult, result)
     }
 
@@ -52,7 +65,8 @@ class PersonInputStateTest {
             name = "Alaa",
             age = "20",
             gender = "Male",
-            jobTitle = "Senior Android Developer"
+            jobTitle = "Senior Android Developer",
+            isSubmitted = true
         )
 
         // When

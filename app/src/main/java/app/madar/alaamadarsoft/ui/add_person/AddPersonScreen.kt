@@ -12,5 +12,5 @@ fun AddPersonScreen() {
     AddPersonContent(
         personInputState = peopleViewModel.personInputState,
         updatePersonInputState = { peopleViewModel.updatePersonInputState { it } }
-    )
+    ) {}
 }

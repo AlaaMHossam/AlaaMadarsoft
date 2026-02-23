@@ -5,15 +5,31 @@ data class PersonInputState(
     val age: String = "",
     val jobTitle: String = "",
     val gender: String = "",
+    val isSubmitted: Boolean = false
 ) {
-    val isValidAge: Boolean
+    private val isValidName: Boolean
+        get() = name.isNotBlank()
+
+    private val isValidAge: Boolean
         get() = age.toIntOrNull()?.let { it >= 18 } ?: false
 
-    val isValidJobTitle: Boolean
+    private val isValidJobTitle: Boolean
         get() = jobTitle.isNotBlank()
 
-    val isValidGender: Boolean
+    private val isValidGender: Boolean
         get() = gender.isNotBlank()
+
+    val nameError: Boolean
+        get() = isSubmitted && !isValidName
+
+    val ageError: Boolean
+        get() = isSubmitted && !isValidAge
+
+    val jobTitleError: Boolean
+        get() = isSubmitted && !isValidJobTitle
+
+    val genderError: Boolean
+        get() = isSubmitted && !isValidGender
 
     val isValidInputs: Boolean
         get() = isValidAge && isValidJobTitle && isValidGender
