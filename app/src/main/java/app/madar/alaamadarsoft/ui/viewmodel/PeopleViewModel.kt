@@ -38,6 +38,9 @@ class PeopleViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
             _peopleUiState.update { PeopleUiState.Loading }
             runCatching { peopleRepository.getPeople() }
                 .onSuccess { people -> _peopleUiState.update { PeopleUiState.Success(people) } }
+                .onFailure { exception ->
+                    _peopleUiState.update { PeopleUiState.Error(exception.message.orEmpty()) }
+                }
         }
     }
 

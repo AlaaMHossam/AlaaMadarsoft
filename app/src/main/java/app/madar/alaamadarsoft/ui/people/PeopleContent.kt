@@ -21,6 +21,7 @@ fun PeopleContent(peopleUiState: PeopleUiState) {
             }
 
             is PeopleUiState.Success -> {}
+            is PeopleUiState.Error -> {}
         }
     }
 }

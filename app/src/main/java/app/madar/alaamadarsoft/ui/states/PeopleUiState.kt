@@ -7,4 +7,5 @@ sealed interface PeopleUiState {
     object Initial : PeopleUiState
     object Loading : PeopleUiState
     data class Success(val people: List<Person>) : PeopleUiState
+    data class Error(val message: String) : PeopleUiState
 }

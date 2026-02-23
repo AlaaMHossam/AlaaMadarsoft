@@ -154,4 +154,24 @@ class PeopleViewModelTest {
         val result = collectionList[2]
         assertEquals(expectedResult, result)
     }
+
+    @Test
+    fun when_people_fetch_is_error_then_people_ui_state_is_error() = runTest {
+        // Given
+        val expectedResult = PeopleUiState.Error("Failed to get People :(")
+        val viewModel = PeopleViewModel(mockPeopleRepository)
+        val collectionList = mutableListOf<PeopleUiState>()
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            viewModel.peopleUiState.collectLatest { collectionList.add(it) }
+        }
+        coEvery { mockPeopleRepository.getPeople() } throws Exception("Failed to get People :(")
+
+        // When
+        viewModel.updatePeopleUiState()
+
+        // Then
+        advanceUntilIdle()
+        val result = collectionList[2]
+        assertEquals(expectedResult, result)
+    }
 }
