@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.VisualTransformation
 import app.madar.alaamadarsoft.R
@@ -24,7 +25,6 @@ import app.madar.alaamadarsoft.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GenderTextField(
-    modifier: Modifier = Modifier,
     gender: String,
     onGenderChange: (String) -> Unit,
     isValidGender: Boolean
@@ -39,7 +39,7 @@ fun GenderTextField(
             readOnly = true,
             singleLine = true,
             interactionSource = interactionSource,
-            modifier = modifier,
+            modifier = Modifier.testTag(GENDER_FIELD_TEST_TAG),
             textStyle = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.onSurface
             ),
