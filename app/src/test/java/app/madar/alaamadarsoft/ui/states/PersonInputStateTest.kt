@@ -1,26 +1,17 @@
 package app.madar.alaamadarsoft.ui.states
 
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 
 class PersonInputStateTest {
-
-    private lateinit var personInputState: PersonInputState
-
-    @Before
-    fun setUp() {
-        personInputState = PersonInputState()
-    }
 
     @Test
     fun when_age_is_less_than_18_then_isValidAge_is_false() {
         // Given
         val expectedResult = false
+        val personInputState = PersonInputState(age = 1)
 
         // When
-        personInputState.age = 1
-        personInputState.validateInputs()
 
         // Then
         val result = personInputState.isValidAge
@@ -31,10 +22,9 @@ class PersonInputStateTest {
     fun when_jobTitle_is_blank_then_isValidJobTitle_is_false() {
         // Given
         val expectedResult = false
+        val personInputState = PersonInputState(jobTitle = "   ")
 
         // When
-        personInputState.jobTitle = "  "
-        personInputState.validateInputs()
 
         // Then
         val result = personInputState.isValidJobTitle
@@ -45,10 +35,9 @@ class PersonInputStateTest {
     fun when_gender_is_empty_then_isValidGender_is_false() {
         // Given
         val expectedResult = false
+        val personInputState = PersonInputState(gender = "")
 
         // When
-        personInputState.gender = ""
-        personInputState.validateInputs()
 
         // Then
         val result = personInputState.isValidGender

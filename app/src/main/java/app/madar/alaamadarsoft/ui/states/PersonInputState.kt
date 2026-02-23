@@ -1,23 +1,20 @@
 package app.madar.alaamadarsoft.ui.states
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+data class PersonInputState(
+    val name: String = "",
+    val age: Int = 0,
+    val jobTitle: String = "",
+    val gender: String = "",
+) {
+    val isValidAge: Boolean
+        get() = age >= 18
 
-class PersonInputState {
-    var name by mutableStateOf("")
-    var age by mutableIntStateOf(0)
-    var jobTitle by mutableStateOf("")
-    var gender by mutableStateOf("")
+    val isValidJobTitle: Boolean
+        get() = jobTitle.isNotBlank()
 
-    var isValidAge by mutableStateOf(true)
-    var isValidJobTitle by mutableStateOf(true)
-    var isValidGender by mutableStateOf(true)
+    val isValidGender: Boolean
+        get() = gender.isNotBlank()
 
-    fun validateInputs() {
-        isValidAge = age >= 18
-        isValidJobTitle = jobTitle.isNotBlank()
-        isValidGender = gender.isNotBlank()
-    }
+    val isValidInputs: Boolean
+        get() = isValidAge && isValidJobTitle && isValidGender
 }
