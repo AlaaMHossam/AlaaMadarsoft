@@ -1,4 +1,4 @@
-package app.madar.alaamadarsoft.ui
+package app.madar.alaamadarsoft.ui.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

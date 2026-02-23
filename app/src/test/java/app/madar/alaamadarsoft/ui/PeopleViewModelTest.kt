@@ -6,6 +6,7 @@ import app.madar.alaamadarsoft.domain.repository.PeopleRepository
 import app.madar.alaamadarsoft.ui.states.AddPersonUiState
 import app.madar.alaamadarsoft.ui.states.PeopleUiState
 import app.madar.alaamadarsoft.ui.states.PersonInputState
+import app.madar.alaamadarsoft.ui.viewmodel.PeopleViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

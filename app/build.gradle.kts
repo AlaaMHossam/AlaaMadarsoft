@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.devtools.ksp)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -68,4 +69,8 @@ dependencies {
 
     // Mockk
     testImplementation(libs.mockk)
+
+    // Navigation 3
+    implementation(libs.navigation3.ui)
+    implementation(libs.navigation3.runtime)
 }

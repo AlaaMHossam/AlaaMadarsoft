@@ -1,4 +1,4 @@
-package app.madar.alaamadarsoft.ui
+package app.madar.alaamadarsoft.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -12,4 +12,3 @@ class PeopleViewModelFactory(private val peopleRepository: PeopleRepository) :
         return PeopleViewModel(peopleRepository) as T
     }
 }
-
