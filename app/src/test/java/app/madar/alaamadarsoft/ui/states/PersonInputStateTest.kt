@@ -26,4 +26,18 @@ class PersonInputStateTest {
         val result = personInputState.isValidAge
         assertEquals(expectedResult, result)
     }
+
+    @Test
+    fun when_job_title_is_blank_then_isValidJobTitle_is_false() {
+        // Given
+        val expectedResult = false
+
+        // When
+        personInputState.jobTitle = "  "
+        personInputState.validateInputs()
+
+        // Then
+        val result = personInputState.isValidJobTitle
+        assertEquals(expectedResult, result)
+    }
 }

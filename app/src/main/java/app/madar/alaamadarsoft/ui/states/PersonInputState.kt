@@ -12,8 +12,10 @@ class PersonInputState {
     var gender by mutableStateOf("")
 
     var isValidAge by mutableStateOf(true)
+    var isValidJobTitle by mutableStateOf(true)
 
     fun validateInputs() {
         isValidAge = age >= 18
+        isValidJobTitle = jobTitle.isNotBlank()
     }
 }
