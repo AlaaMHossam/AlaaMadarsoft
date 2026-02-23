@@ -20,12 +20,13 @@ import app.madar.alaamadarsoft.ui.states.PersonInputState
 
 @Composable
 fun AddPersonContent(
+    modifier: Modifier = Modifier,
     personInputState: PersonInputState,
     updatePersonInputState: (PersonInputState) -> Unit,
     onSubmitClicked: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
@@ -85,5 +86,5 @@ fun AddPersonContent(
 @Preview
 @Composable
 private fun AddPersonContentPreview() {
-    AddPersonContent(PersonInputState(), {}) {}
+    AddPersonContent(modifier = Modifier, PersonInputState(), {}) {}
 }

@@ -41,7 +41,9 @@ class PeopleViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
 
     fun addPerson() {
         viewModelScope.launch {
+            updatePersonInputState { personInputState.copy(isSubmitted = true) }
             if (personInputState.isValidInputs) {
+
                 _addPersonUiState.emit(AddPersonUiState.Loading)
 
                 val person = Person(
@@ -55,6 +57,7 @@ class PeopleViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
                     .onSuccess { _addPersonUiState.emit(AddPersonUiState.Success("Person Added")) }
                     .onFailure { _addPersonUiState.emit(AddPersonUiState.Error("Failed to add person")) }
             }
+            updatePersonInputState { personInputState.copy(isSubmitted = false) }
         }
     }
 }
