@@ -14,7 +14,7 @@ class PeopleRepositoryImpl(private val peopleDao: PeopleDao) : PeopleRepository 
         peopleDao.addPerson(person.toEntity())
     }
 
-    suspend fun getPeople() = withContext(Dispatchers.IO) {
+    override suspend fun getPeople(): List<Person> = withContext(Dispatchers.IO) {
         peopleDao.getPeople().toPeople()
     }
 }

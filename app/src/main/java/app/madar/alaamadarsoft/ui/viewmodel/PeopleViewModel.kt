@@ -36,6 +36,8 @@ class PeopleViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
     fun updatePeopleUiState() {
         viewModelScope.launch {
             _peopleUiState.update { PeopleUiState.Loading }
+            runCatching { peopleRepository.getPeople() }
+                .onSuccess { people -> _peopleUiState.update { PeopleUiState.Success(people) } }
         }
     }
 

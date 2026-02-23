@@ -32,13 +32,17 @@ class PeopleViewModelTest {
         // Given
         val expectedResult = PeopleUiState.Loading
         val viewModel = PeopleViewModel(mockPeopleRepository)
+        val collectionList = mutableListOf<PeopleUiState>()
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            viewModel.peopleUiState.collectLatest { collectionList.add(it) }
+        }
 
         // When
         viewModel.updatePeopleUiState()
 
         // Then
         advanceUntilIdle()
-        val result = viewModel.peopleUiState.value
+        val result = collectionList[1]
         assertEquals(expectedResult, result)
     }
 
@@ -128,6 +132,26 @@ class PeopleViewModelTest {
         // Then
         advanceUntilIdle()
         val result = collectionList[1]
+        assertEquals(expectedResult, result)
+    }
+
+    @Test
+    fun when_people_fetch_is_success_then_people_ui_state_is_success() = runTest {
+        // Given
+        val expectedResult = PeopleUiState.Success(emptyList())
+        val viewModel = PeopleViewModel(mockPeopleRepository)
+        val collectionList = mutableListOf<PeopleUiState>()
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            viewModel.peopleUiState.collectLatest { collectionList.add(it) }
+        }
+        coEvery { mockPeopleRepository.getPeople() } returns emptyList()
+
+        // When
+        viewModel.updatePeopleUiState()
+
+        // Then
+        advanceUntilIdle()
+        val result = collectionList[2]
         assertEquals(expectedResult, result)
     }
 }
