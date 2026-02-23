@@ -14,7 +14,7 @@ class PersonInputStateTest {
     }
 
     @Test
-    fun when_age_is_less_than_18_then_isValid_age_is_false() {
+    fun when_age_is_less_than_18_then_isValidAge_is_false() {
         // Given
         val expectedResult = false
 
@@ -28,7 +28,7 @@ class PersonInputStateTest {
     }
 
     @Test
-    fun when_job_title_is_blank_then_isValidJobTitle_is_false() {
+    fun when_jobTitle_is_blank_then_isValidJobTitle_is_false() {
         // Given
         val expectedResult = false
 
@@ -38,6 +38,20 @@ class PersonInputStateTest {
 
         // Then
         val result = personInputState.isValidJobTitle
+        assertEquals(expectedResult, result)
+    }
+
+    @Test
+    fun when_gender_is_empty_then_isValidGender_is_false() {
+        // Given
+        val expectedResult = false
+
+        // When
+        personInputState.gender = ""
+        personInputState.validateInputs()
+
+        // Then
+        val result = personInputState.isValidGender
         assertEquals(expectedResult, result)
     }
 }

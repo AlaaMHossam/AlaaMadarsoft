@@ -1,4 +1,5 @@
 ## Test Cases
 
 1. when_age_is_less_than_18_then_isValidAge_is_false
-2. when_job_title_is_blank_then_isValidJobTitle_is_false
+2. when_jobTitle_is_blank_then_isValidJobTitle_is_false
+3. when_gender_is_empty_then_isValidGender_is_false
