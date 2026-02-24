@@ -1,14 +1,14 @@
 package app.madar.alaamadarsoft
 
 import android.app.Application
-import app.madar.alaamadarsoft.data.data_source.db.DBProvider
+import androidx.room.Room
+import app.madar.alaamadarsoft.data.data_source.db.RoomDatabase
 import app.madar.alaamadarsoft.data.repository.PeopleRepositoryImpl
 import app.madar.alaamadarsoft.domain.repository.PeopleRepository
 
-class App : Application(), AppContainer {
-
+class TestApp : Application(), AppContainer {
     override val peopleRepository: PeopleRepository by lazy {
-        val db = DBProvider(this)
-        PeopleRepositoryImpl(db.peopleDao)
+        val db = Room.inMemoryDatabaseBuilder(this, RoomDatabase::class.java).build()
+        PeopleRepositoryImpl(db.peopleDao())
     }
 }

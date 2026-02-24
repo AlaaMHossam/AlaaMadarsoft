@@ -6,7 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import app.madar.alaamadarsoft.App
+import app.madar.alaamadarsoft.AppContainer
 import app.madar.alaamadarsoft.ui.add_person.viewmodel.AddPersonViewModel
 import app.madar.alaamadarsoft.ui.add_person.viewmodel.AddPersonViewModelFactory
 import app.madar.alaamadarsoft.ui.states.AddPersonUiState
@@ -14,10 +14,10 @@ import app.madar.alaamadarsoft.ui.states.AddPersonUiState
 @Composable
 fun AddPersonScreen(navigateToPeople: () -> Unit) {
 
-    val app = LocalContext.current.applicationContext as App
+    val container = LocalContext.current.applicationContext as AppContainer
 
     val factory = remember {
-        AddPersonViewModelFactory(app.peopleRepository)
+        AddPersonViewModelFactory(container.peopleRepository)
     }
 
     val addPersonViewModel: AddPersonViewModel = viewModel(factory = factory)
