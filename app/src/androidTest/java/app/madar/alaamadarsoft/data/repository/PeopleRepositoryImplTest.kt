@@ -7,6 +7,7 @@ import app.madar.alaamadarsoft.data.data_source.db.dao.PeopleDao
 import app.madar.alaamadarsoft.data.data_source.db.entities.PersonEntity
 import app.madar.alaamadarsoft.domain.model.Gender
 import app.madar.alaamadarsoft.domain.model.Person
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -47,7 +48,7 @@ class PeopleRepositoryImplTest {
         runBlocking { peopleRepositoryImpl.addPerson(person) }
 
         // Then
-        val result = runBlocking { peopleDao.getPeople().first() }
+        val result = runBlocking { peopleDao.getPeople().first().first() }
         assertEquals(expectedResult, result)
     }
 
@@ -68,7 +69,7 @@ class PeopleRepositoryImplTest {
         // When
 
         // Then
-        val result = runBlocking { peopleRepositoryImpl.getPeople() }
-        assertEquals(expectedResult, result.size)
+        val result = runBlocking { peopleRepositoryImpl.getPeople().first().size }
+        assertEquals(expectedResult, result)
     }
 }

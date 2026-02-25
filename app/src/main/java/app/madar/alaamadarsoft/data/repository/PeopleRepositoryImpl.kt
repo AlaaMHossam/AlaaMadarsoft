@@ -6,6 +6,8 @@ import app.madar.alaamadarsoft.data.mappers.toPeople
 import app.madar.alaamadarsoft.domain.model.Person
 import app.madar.alaamadarsoft.domain.repository.PeopleRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 class PeopleRepositoryImpl(private val peopleDao: PeopleDao) : PeopleRepository {
@@ -14,7 +16,7 @@ class PeopleRepositoryImpl(private val peopleDao: PeopleDao) : PeopleRepository 
         peopleDao.addPerson(person.toEntity())
     }
 
-    override suspend fun getPeople(): List<Person> = withContext(Dispatchers.IO) {
-        peopleDao.getPeople().toPeople()
-    }
+    override fun getPeople(): Flow<List<Person>> = //withContext(Dispatchers.IO) {
+        peopleDao.getPeople().map { it.toPeople() }
+    //  }
 }

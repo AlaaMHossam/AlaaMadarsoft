@@ -2,28 +2,25 @@ package app.madar.alaamadarsoft.ui.people.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.madar.alaamadarsoft.domain.model.Person
 import app.madar.alaamadarsoft.domain.repository.PeopleRepository
 import app.madar.alaamadarsoft.ui.states.PeopleUiState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 
-class PeopleViewModel(val peopleRepository: PeopleRepository) : ViewModel() {
+class PeopleViewModel(peopleRepository: PeopleRepository) : ViewModel() {
 
-    private val _peopleUiState = MutableStateFlow<PeopleUiState>(PeopleUiState.Initial)
-    val peopleUiState = _peopleUiState.asStateFlow()
-
-    fun updatePeopleUiState() {
-        viewModelScope.launch {
-            _peopleUiState.update { PeopleUiState.Loading }
-            runCatching { peopleRepository.getPeople() }
-                .onSuccess { people -> _peopleUiState.update { PeopleUiState.Success(people) } }
-                .onFailure { exception ->
-                    _peopleUiState.update { PeopleUiState.Error(exception.message.orEmpty()) }
-                }
-        }
-    }
-
-
+    val peopleUiState: StateFlow<PeopleUiState> = peopleRepository.getPeople()
+        .map<List<Person>, PeopleUiState> { PeopleUiState.Success(it) }
+        .onStart { emit(PeopleUiState.Loading) }
+        .catch { emit(PeopleUiState.Error(it.message.orEmpty())) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = PeopleUiState.Initial
+        )
 }
